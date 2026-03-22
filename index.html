@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Mubarak - Selamat Idul Fitri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F4E4BC;
+            --emerald: #10B981;
+            --emerald-dark: #059669;
+            --dark: #0F172A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: white;
+        }
+
+        /* Islamic Pattern Background */
+        .islamic-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30L30 0z' fill='%23D4AF37' fill-opacity='0.4'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Particle Canvas */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Floating Lanterns */
+        .lantern {
+            position: absolute;
+            width: 40px;
+            height: 60px;
+            background: linear-gradient(180deg, #D4AF37 0%, #F4E4BC 50%, #D4AF37 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.6), inset 0 -10px 20px rgba(0,0,0,0.2);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .lantern::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 10px;
+            background: #8B6914;
+            border-radius: 2px;
+        }
+
+        .lantern::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 20px;
+            background: #D4AF37;
+            box-shadow: 0 0 10px #D4AF37;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        /* Moon */
+        .moon {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle at 30% 30%, #F4E4BC, #D4AF37);
+            border-radius: 50%;
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.5), 0 0 100px rgba(212, 175, 55, 0.3);
+            top: 10%;
+            right: 10%;
+            animation: moonGlow 4s ease-in-out infinite;
+        }
+
+        .moon::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: #0F172A;
+            border-radius: 50%;
+            top: -10px;
+            right: 20px;
+        }
+
+        @keyframes moonGlow {
+            0%, 100% { box-shadow: 0 0 60px rgba(212, 175, 55, 0.5), 0 0 100px rgba(212, 55, 175, 0.3); }
+            50% { box-shadow: 0 0 80px rgba(212, 175, 55, 0.8), 0 0 120px rgba(212, 175, 55, 0.5); }
+        }
+
+        /* Stars */
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Typography */
+        .arabic-font {
+            font-family: 'Amiri', serif;
+        }
+
+        .script-font {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* Gold Gradient Text */
+        .gold-text {
+            background: linear-gradient(135deg, #D4AF37 0%, #F4E4BC 50%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* Button Styles */
+        .btn-gold {
+            background: linear-gradient(135deg, #D4AF37 0%, #F4E4BC 50%, #D4AF37 100%);
+            color: #0F172A;
+            border: none;
+            padding: 16px 48px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.6);
+        }
+
+        .btn-gold::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-gold:hover::before {
+            left: 100%;
+        }
+
+        /* Input Styles */
+        .input-gold {
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            color: #F4E4BC;
+            padding: 16px 24px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .input-gold:focus {
+            border-color: #D4AF37;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            background: rgba(212, 175, 55, 0.15);
+        }
+
+        .input-gold::placeholder {
+            color: rgba(244, 228, 188, 0.5);
+        }
+
+        /* Page Sections */
+        .page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+            z-index: 10;
+            padding: 20px;
+        }
+
+        .page.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Music Control */
+        .music-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.2);
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .music-control:hover {
+            background: rgba(212, 175, 55, 0.4);
+            transform: scale(1.1);
+        }
+
+        .music-control.playing {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+            50% { box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); }
+        }
+
+        /* Decorative Elements */
+        .ornament {
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .ornament::before,
+        .ornament::after {
+            content: '❦';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #D4AF37;
+            font-size: 24px;
+        }
+
+        .ornament::before { left: 20%; }
+        .ornament::after { right: 20%; }
+
+        /* Mosque Silhouette */
+        .mosque {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .mosque::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80px;
+            height: 150px;
+            background: linear-gradient(to top, #0F172A, transparent);
+            border-radius: 50% 50% 0 0;
+        }
+
+        .mosque::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 15%;
+            width: 100px;
+            height: 180px;
+            background: linear-gradient(to top, #0F172A, transparent);
+            border-radius: 50% 50% 0 0;
+        }
+
+        /* Share Button */
+        .share-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 100;
+            padding: 12px 24px;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            color: #10B981;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+        }
+
+        .share-btn:hover {
+            background: rgba(16, 185, 129, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Typing Cursor */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+            color: #D4AF37;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .moon { width: 80px; height: 80px; top: 5%; right: 5%; }
+            .moon::after { width: 70px; height: 70px; }
+            .lantern { width: 30px; height: 45px; }
+            h1 { font-size: 3rem !important; }
+            h2 { font-size: 2rem !important; }
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0F172A;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .crescent-loader {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            box-shadow: -15px 0 0 0 #D4AF37;
+            animation: rotate 2s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="crescent-loader mb-4"></div>
+            <p class="text-gold arabic-font text-xl">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Islamic Pattern Background -->
+    <div class="islamic-pattern"></div>
+
+    <!-- Particle Canvas -->
+    <canvas id="particles"></canvas>
+
+    <!-- Decorative Elements -->
+    <div class="moon"></div>
+    <div class="mosque"></div>
+
+    <!-- Floating Lanterns -->
+    <div class="lantern" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+    <div class="lantern" style="top: 40%; right: 15%; animation-delay: 2s;"></div>
+    <div class="lantern" style="top: 60%; left: 20%; animation-delay: 4s;"></div>
+    <div class="lantern" style="top: 30%; right: 25%; animation-delay: 1s;"></div>
+
+    <!-- Stars -->
+    <div id="stars-container"></div>
+
+    <!-- Page 1: Landing -->
+    <div class="page active" id="page1">
+        <div class="text-center z-10 max-w-4xl mx-auto">
+            <div class="mb-8 opacity-0" id="landing-ornament-top">
+                <div class="ornament"></div>
+            </div>
+            
+            <h1 class="arabic-font text-6xl md:text-8xl font-bold mb-4 gold-text opacity-0" id="landing-title">
+                Eid Mubarak
+            </h1>
+            
+            <p class="script-font text-3xl md:text-4xl text-emerald-400 mb-8 opacity-0" id="landing-subtitle">
+                Selamat Hari Raya Idul Fitri
+            </p>
+            
+            <div class="mb-8 opacity-0" id="landing-ornament-bottom">
+                <div class="ornament"></div>
+            </div>
+
+            <div class="glass rounded-2xl p-8 max-w-md mx-auto mb-8 opacity-0" id="landing-form">
+                <p class="text-gold-light mb-4 text-lg">Masukkan nama penerima:</p>
+                <input type="text" id="nameInput" class="input-gold mb-6 text-center" placeholder="Nama penerima ucapan..." maxlength="30">
+                <button class="btn-gold w-full" onclick="openGreeting()">
+                    Buka Ucapan ✨
+                </button>
+            </div>
+
+            <p class="text-sm text-gray-400 mt-4 opacity-0" id="landing-hint">
+                Atau gunakan link: ?to=Nama
+            </p>
+        </div>
+    </div>
+
+    <!-- Page 2: Greeting -->
+    <div class="page" id="page2">
+        <div class="text-center z-10 max-w-4xl mx-auto px-4">
+            <div class="mb-6 opacity-0 greeting-element">
+                <div class="ornament"></div>
+            </div>
+            
+            <h2 class="arabic-font text-5xl md:text-7xl font-bold mb-4 gold-text opacity-0 greeting-element">
+                تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُمْ
+            </h2>
+            
+            <p class="text-xl md:text-2xl text-emerald-400 mb-6 opacity-0 greeting-element">
+                Taqabbalallahu minna wa minkum
+            </p>
+            
+            <p class="text-lg text-gold-light mb-8 opacity-0 greeting-element">
+                (Semoga Allah menerima amal ibadah kami dan kalian)
+            </p>
+
+            <div class="glass rounded-3xl p-8 md:p-12 max-w-2xl mx-auto mb-8 opacity-0 greeting-element">
+                <p class="script-font text-3xl md:text-4xl text-white mb-4">
+                    Untuk
+                </p>
+                <h3 class="arabic-font text-4xl md:text-6xl font-bold gold-text mb-6" id="recipientName">
+                    [Nama]
+                </h3>
+                
+                <div class="space-y-4 text-lg md:text-xl text-gray-200 leading-relaxed">
+                    <p class="opacity-0 message-line">Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
+                    <p class="opacity-0 message-line">Dengan penuh suka cita, kami sampaikan selamat Hari Raya Idul Fitri 1446 H.</p>
+                    <p class="opacity-0 message-line">Mohon maaf lahir dan batin atas segala khilaf dan kesalahan.</p>
+                    <p class="opacity-0 message-line">Semoga kemenangan ini membawa keberkahan, kedamaian, dan kebahagiaan bagi kita semua.</p>
+                    <p class="opacity-0 message-line">Minal aidin wal faizin. 🌙</p>
+                </div>
+            </div>
+
+            <div class="ornament mb-8 opacity-0 greeting-element"></div>
+            
+            <p class="text-emerald-400 text-lg opacity-0 greeting-element">
+                ✨ Selamat Lebaran! ✨
+            </p>
+        </div>
+    </div>
+
+    <!-- Music Control -->
+    <div class="music-control" id="musicBtn" onclick="toggleMusic()">
+        <svg id="playIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #D4AF37;">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        <svg id="pauseIcon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #D4AF37; display: none;">
+            <rect x="6" y="4" width="4" height="16"></rect>
+            <rect x="14" y="4" width="4" height="16"></rect>
+        </svg>
+    </div>
+
+    <!-- Share Button -->
+    <button class="share-btn" onclick="shareGreeting()">
+        🔗 Share Link
+    </button>
+
+    <!-- Audio Element -->
+    <audio id="bgMusic" loop>
+        <source src="https://raw.githubusercontent.com/friska10092002-jpg/eid-mubarak/main/eid%20mubarak.mp3" type="audio/mpeg">
+        <!-- Fallback: Replace with actual Islamic instrumental URL -->
+    </audio>
+
+    <script>
+        // Global Variables
+        let musicPlaying = false;
+        let recipient = '';
+        const audio = document.getElementById('bgMusic');
+        
+        // Initialize
+        window.addEventListener('load', () => {
+            // Hide loader
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+                initAnimations();
+            }, 1000);
+
+            // Check URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const nameFromUrl = urlParams.get('to');
+            
+         if (nameFromUrl) {
+    document.getElementById('nameInput').value = decodeURIComponent(nameFromUrl);
+}
+
+            // Initialize particles
+            initParticles();
+            
+            // Create stars
+            createStars();
+        });
+
+        // GSAP Animations
+        function initAnimations() {
+            const tl = gsap.timeline();
+
+            tl.to('#landing-ornament-top', { opacity: 1, duration: 1, ease: 'power2.out' })
+              .to('#landing-title', { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }, '-=0.5')
+              .to('#landing-subtitle', { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }, '-=0.8')
+              .to('#landing-ornament-bottom', { opacity: 1, duration: 0.8 }, '-=0.6')
+              .to('#landing-form', { opacity: 1, y: 0, duration: 0.8, ease: 'back.out(1.7)' }, '-=0.4')
+              .to('#landing-hint', { opacity: 1, duration: 0.6 }, '-=0.2');
+
+            // Floating animation for lanterns
+            gsap.to('.lantern', {
+                y: 'random(-30, 30)',
+                rotation: 'random(-5, 5)',
+                duration: 'random(3, 6)',
+                ease: 'sine.inOut',
+                repeat: -1,
+                yoyo: true,
+                stagger: 0.5
+            });
+        }
+
+        // Particle System
+        function initParticles() {
+            const canvas = document.getElementById('particles');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const particleCount = 50;
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedX = Math.random() * 0.5 - 0.25;
+                    this.speedY = Math.random() * 0.5 - 0.25;
+                    this.opacity = Math.random() * 0.5 + 0.2;
+                    this.growing = Math.random() > 0.5;
+                }
+
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+
+                    if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+
+                    if (this.growing) {
+                        this.opacity += 0.01;
+                        if (this.opacity >= 0.8) this.growing = false;
+                    } else {
+                        this.opacity -= 0.01;
+                        if (this.opacity <= 0.2) this.growing = true;
+                    }
+                }
+
+                draw() {
+                    ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
+
+        // Create Stars
+        function createStars() {
+            const container = document.getElementById('stars-container');
+            for (let i = 0; i < 30; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 60 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(star);
+            }
+        }
+
+        // Open Greeting
+        function openGreeting() {
+            const input = document.getElementById('nameInput');
+            recipient = input.value.trim() || 'Sahabat';
+            
+            // Play sound effect
+            playClickSound();
+
+            // Transition
+            const tl = gsap.timeline();
+            
+            tl.to('#page1', { opacity: 0, duration: 0.5, onComplete: () => {
+                document.getElementById('page1').classList.remove('active');
+                document.getElementById('page2').classList.add('active');
+                
+                // Update recipient name
+                document.getElementById('recipientName').textContent = recipient;
+                
+                // Animate greeting elements
+                animateGreetingPage();
+            }})
+            .to('#page2', { opacity: 1, duration: 0.5 });
+
+            // Auto play music
+            if (!musicPlaying) {
+                setTimeout(() => {
+                    toggleMusic();
+                }, 1000);
+            }
+        }
+
+        // Animate Greeting Page
+        function animateGreetingPage() {
+            const tl = gsap.timeline();
+            
+            tl.to('.greeting-element', {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: 'power2.out'
+            })
+            .to('.message-line', {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.3,
+                ease: 'power2.out',
+                onStart: function() {
+                    // Add typing effect to first message
+                    typeWriter(document.querySelector('.message-line'), 0);
+                }
+            }, '-=0.4');
+        }
+
+        // Typewriter Effect
+        function typeWriter(element, index) {
+            if (!element || index >= document.querySelectorAll('.message-line').length) return;
+            
+            const text = element.textContent;
+            element.textContent = '';
+            element.classList.add('typing-cursor');
+            
+            let i = 0;
+            const speed = 50;
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    element.classList.remove('typing-cursor');
+                    // Type next line
+                    const nextElement = document.querySelectorAll('.message-line')[index + 1];
+                    if (nextElement) {
+                        setTimeout(() => typeWriter(nextElement, index + 1), 300);
+                    }
+                }
+            }
+            
+            type();
+        }
+
+        // Toggle Music
+        function toggleMusic() {
+            const btn = document.getElementById('musicBtn');
+            const playIcon = document.getElementById('playIcon');
+            const pauseIcon = document.getElementById('pauseIcon');
+
+            if (musicPlaying) {
+                audio.pause();
+                musicPlaying = false;
+                btn.classList.remove('playing');
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+            } else {
+                // Note: Autoplay might be blocked by browser
+                audio.play().catch(e => {
+                    console.log('Autoplay prevented:', e);
+                });
+                musicPlaying = true;
+                btn.classList.add('playing');
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+            }
+        }
+
+        // Play Click Sound
+        function playClickSound() {
+            // Create oscillator for simple click sound
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
+
+        // Share Greeting
+        function shareGreeting() {
+            const name = recipient || document.getElementById('nameInput').value || 'Sahabat';
+            const shareUrl = `${window.location.origin}${window.location.pathname}?to=${encodeURIComponent(name)}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Eid Mubarak!',
+                    text: `Ucapan Lebaran untuk ${name}`,
+                    url: shareUrl
+                }).catch(err => console.log('Error sharing:', err));
+            } else {
+                // Fallback: Copy to clipboard
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    alert('Link telah disalin! Bagikan ke teman-teman Anda.');
+                }).catch(() => {
+                    prompt('Copy link ini:', shareUrl);
+                });
+            }
+        }
+
+        // Parallax Effect
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+
+            gsap.to('.moon', { x: x * 0.5, y: y * 0.5, duration: 1 });
+            gsap.to('.lantern', { x: x * 0.3, y: y * 0.3, duration: 1, stagger: 0.1 });
+        });
+
+        // Handle Enter Key
+        document.getElementById('nameInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                openGreeting();
+            }
+        });
+
+        function shareGreeting() {
+    const name = recipient || 'Teman';
+    const url = `${window.location.origin}${window.location.pathname}?to=${encodeURIComponent(name)}`;
+    
+    navigator.clipboard.writeText(url).then(() => {
+        alert("Link berhasil disalin:\n" + url);
+    });
+}
+    </script>
+</body>
+</html>
