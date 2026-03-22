@@ -562,12 +562,9 @@
             const urlParams = new URLSearchParams(window.location.search);
             const nameFromUrl = urlParams.get('to');
             
-            if (nameFromUrl) {
-                document.getElementById('nameInput').value = decodeURIComponent(nameFromUrl);
-                setTimeout(() => {
-                    openGreeting();
-                }, 1500);
-            }
+          if (nameFromUrl) {
+    document.getElementById('nameInput').value = decodeURIComponent(nameFromUrl);
+}
 
             // Initialize particles
             initParticles();
